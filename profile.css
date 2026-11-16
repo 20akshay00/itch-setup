@@ -12,6 +12,15 @@ html { scrollbar-color: #d14081 #1a0b30; scrollbar-width: thin; }
 /* behind the background image: dark instead of the theme's white, which showed on overscroll, and no bounce */
 html, body { background: #260a4b; overscroll-behavior: none; }
 
+/* signals running along the background's traces: docs/signals.png, an animated tile laid over the
+   background with its anchor (top centre) and size, so the pulses stay on the traces at any width.
+   The wrap's stacking context keeps it above the wrap's own background and below the page. */
+.user_page_wrap { position: relative; z-index: 0; }
+.user_page_wrap::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; image-rendering: pixelated;
+    background: url(//20akshay00.github.io/itch-setup/signals.png) 50% 0 / 1280px;
+}
+
 /* the "20akshay00" link under the banner repeats the banner */
 .user_page span.link_group { display: none; }
 
@@ -135,4 +144,7 @@ html, body { background: #260a4b; overscroll-behavior: none; }
     #profile_header::before { right: 0; }
     #profile_header .image_header::after { left: 0; }
 }
-@media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after { animation: none !important; }
+    .user_page_wrap::before { display: none; }
+}

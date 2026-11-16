@@ -9,7 +9,7 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
 | `profile.css` | The profile's custom CSS. Edit this one.                                                                                   |
 | `art/`        | The pixel art everything is built from: the sprites, the robot's walk sheet, the two rocks, and the banner (an HTML page). |
 | `upload/`     | What goes into itch by hand: the banner, the background, the robot, and the minified CSS. Built, don't edit.               |
-| `docs/`       | The floating sprites. GitHub Pages serves this folder, and the CSS loads the sprites from it. Built, don't edit.           |
+| `docs/`       | The floating sprites and the trace signals. GitHub Pages serves this folder, and the CSS loads them from it. Built, don't edit. |
 | `build.sh`    | Rebuilds `upload/` and `docs/` from `art/` and `profile.css`.                                                              |
 | `scripts/`    | Helpers that `build.sh` runs.                                                                                              |
 | `original/`   | The profile as it was before the 2026 redesign.                                                                            |
@@ -30,6 +30,9 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
 
 - **The floating sprites** are placed by `profile.css` on top of the banner to animate motion.
 - **The glow** is baked into the images to save CSS space.
+- **The signals** running along the background's traces are an animated PNG (`scripts/signals.py`) built from the
+  same traces as the background. The CSS tiles it over the background with the same anchor, so the two
+  stay lined up at any screen width. Change the background and rebuild both.
 - **The CSS uses nesting** to fit in 5120 characters.
 - **itch filters the CSS**: it silently drops some properties, like `zoom` and `scale`. `transform` gets through.
 - **The banner is shown at 75%** (a CSS transform on the header), so the banner image and the sprites

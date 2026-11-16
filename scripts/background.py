@@ -50,16 +50,14 @@ def draw_pad(img, x, y, c):
     img[y % N, x % N] = hole
 
 
-def traces():
-    field = height_field()
-    level = np.floor(field * LEVELS).astype(int)
-    img = np.stack([rgb(c) for c in TONES])[np.minimum(level, len(TONES) - 1)]
+def segments(field):
+    """The traces as (level, from, to, broken) runs between cell-edge midpoints, by marching squares."""
     rng = np.random.default_rng(11)
     m = N // GRID
     corners = field[::GRID, ::GRID]                            # samples at the grid corners
+    out = []
     for lv in range(1, LEVELS):
         th = lv / LEVELS
-        col = rgb(LINE2 if lv % 4 == 0 else LINE)
         above = corners > th
         for y in range(m):
             for x in range(m):
@@ -75,11 +73,21 @@ def traces():
                 else:
                     continue
                 for e1, e2 in segs:
-                    if rng.random() < .04:                     # a break in the trace, padded at both ends
-                        draw_pad(img, *mids[e1], col)
-                        draw_pad(img, *mids[e2], col)
-                    else:
-                        draw_line(img, mids[e1], mids[e2], col)
+                    out.append((lv, mids[e1], mids[e2], rng.random() < .04))   # a break in the trace, padded
+    return out
+
+
+def traces():
+    field = height_field()
+    level = np.floor(field * LEVELS).astype(int)
+    img = np.stack([rgb(c) for c in TONES])[np.minimum(level, len(TONES) - 1)]
+    for lv, p, q, broken in segments(field):
+        col = rgb(LINE2 if lv % 4 == 0 else LINE)
+        if broken:
+            draw_pad(img, *p, col)
+            draw_pad(img, *q, col)
+        else:
+            draw_line(img, p, q, col)
     return img
 
 
