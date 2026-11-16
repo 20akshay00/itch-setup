@@ -1,7 +1,1 @@
-# build outputs (bash build_sprites.sh regenerates them)
-stickers-glow/
-composites/
-dist/
 __pycache__/
-# design mockups (local only)
-mockups/

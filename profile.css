@@ -1,9 +1,8 @@
 /* itch.io profile custom CSS - draft 5: "screens in the sky" (draft 4 is in git history; the
    pre-redesign original in original/profile.css).
-   A neon sign for a banner (banner/banner.png, the header image), slim screens for the bio and the
-   game covers, and pixel-art sprites with a pink glow floating over it all, on the contour-traces
-   background (bg/art_traces.png, the page background in the theme editor).
-   The sprites load from the site's images/sprites/itch-*.png (built by build_sprites.sh).
+   A neon sign for a banner (upload/banner.png), slim screens for the bio and the game covers, and
+   pixel-art sprites with a pink glow floating over it all, on the contour-traces background
+   (upload/background.png). The sprites load from this repo's docs/, served by GitHub Pages.
    Written with CSS nesting ("& ..." inside a rule) to fit itch's 5120-character limit. */
 
 @import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=Chakra+Petch:wght@500;600&display=swap");
@@ -46,7 +45,7 @@
         content: ""; display: inline-block; width: 10px; height: 20px; margin-left: 6px; vertical-align: -4px;
         background: #ff8cc6; box-shadow: 0 0 8px #ff6fae; animation: blink 1s steps(1) infinite;
     }
-    /* the robot walks along the top of the bezel. Upload robot_walk_glow.png (ten 64px frames side by
+    /* the robot walks along the top of the bezel. Upload upload/robot.png (ten 64px frames side by
        side, the glow baked in) at the very start of the bio. Its feet are 52px down the frame; the
        bezel is 8px. walk moves it, flip turns it (steps(1) holds each keyframe until the next). */
     & img {
@@ -94,7 +93,7 @@
     & .web_flag { background: #d14081; border-radius: 0; }
 }
 
-/* ---- floating sprites (protocol-relative URLs into the site's images/sprites/) ----
+/* ---- floating sprites (from docs/, via GitHub Pages) ----
    Banner: drawn over the header image (which holds only the sign) so they can float. The flyer
    drifts in front at the top left; the island and the tank on its rock float along the bottom, their
    ground lines level at 300px, running a little past the column into the margins. Sizes are the
@@ -109,27 +108,27 @@
 }
 #profile_header .image_header::after {            /* 506x256: ground 70px down */
     left: -50px; top: 230px; width: 506px; height: 256px;
-    background-image: url(//20akshay00.github.io/images/sprites/itch-island.png);
+    background-image: url(//20akshay00.github.io/itch-setup/island.png);
     animation: bob 6.5s ease-in-out infinite;
 }
 #profile_header::before {                         /* 300x292 at 80%: ground 110px down */
     z-index: 2; right: 30px; top: 190px; width: 240px; height: 234px; transform: rotate(5deg);
-    background-image: url(//20akshay00.github.io/images/sprites/itch-tankrock.png);
+    background-image: url(//20akshay00.github.io/itch-setup/tank.png);
     animation: bob 5.5s ease-in-out infinite 1.2s;
 }
 #profile_header::after {                          /* 238x166, turned to face right */
     z-index: 2; left: -96px; top: -22px; width: 238px; height: 166px; transform: scaleX(-1);
-    background-image: url(//20akshay00.github.io/images/sprites/itch-flyer.png);
+    background-image: url(//20akshay00.github.io/itch-setup/flyer.png);
     animation: drift 7s ease-in-out infinite;
 }
 .game_grid_widget::before {                       /* 150x170 */
     left: -230px; top: -340px; width: 150px; height: 170px;
-    background-image: url(//20akshay00.github.io/images/sprites/itch-jets.png);
+    background-image: url(//20akshay00.github.io/itch-setup/jets.png);
     animation: bob 4.5s ease-in-out infinite;
 }
 .game_grid_widget::after {                        /* 92x82 */
     right: -200px; top: -300px; width: 92px; height: 82px;
-    background-image: url(//20akshay00.github.io/images/sprites/itch-cage.png);
+    background-image: url(//20akshay00.github.io/itch-setup/cage.png);
     animation: bob 4.5s ease-in-out infinite 1.3s;
 }
 @keyframes bob { 50% { translate: 0 -7px; } }
