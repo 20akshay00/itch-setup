@@ -82,6 +82,9 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 
 /* ---- game covers: little monitors with scanlines; on hover they lift, light up and blink
    PRESS START ---- */
+/* the placeholder project whose cover (upload/card.png) itch uses as the profile's link preview: it has
+   to stay first in the grid, and is hidden here */
+[data-game_id="5384024"] { display: none; }
 .game_grid_widget .game_cell {
     margin-bottom: 30px;
     & .game_thumb {

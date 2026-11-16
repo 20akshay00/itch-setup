@@ -40,4 +40,7 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
   it, so they scale together when itch shrinks the banner on phones.
 - **Phones** (below 600px) get their own layout: a bigger sign, the sprites pulled in, even card gaps, a
   shorter robot cycle, and on touch screens no hover effects.
+- **The link preview** (Discord, Twitter, ...) is `upload/card.png`. itch uses the cover of the first
+  project in the profile's grid, so it's the cover of a placeholder project (ID 5384024) that has to stay
+  first, and the CSS hides it.
 - **The CSS is almost exactly at the limit** (about 5100 of 5120). Anything new needs something cut.
