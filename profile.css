@@ -7,6 +7,9 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=Chakra+Petch:wght@500;600&display=swap");
 
+/* a thin pink scrollbar on the dark track (to hide it instead: scrollbar-width: none) */
+html { scrollbar-color: #d14081 #1a0b30; scrollbar-width: thin; }
+
 /* the "20akshay00" link under the banner repeats the banner */
 .user_page span.link_group { display: none; }
 
