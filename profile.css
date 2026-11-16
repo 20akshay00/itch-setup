@@ -147,7 +147,7 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 @keyframes bob { 50% { translate: 0 -3.5%; } }
 @keyframes drift { 30% { translate: -3.4% -8%; } 65% { translate: 2.2% -3.2%; } }
 /* touch screens have no hover: PRESS START stayed up after a tap, and the covers stayed dimmed */
-@media (hover: none) { .game_grid_widget .game_thumb::before { display: none; } .game_thumb img { filter: none; } }
+@media (hover: none) { .game_grid_widget .game_thumb::before { display: none; } .game_thumb img { filter: none !important; } }
 /* ---- phones ---- */
 @media (max-width: 600px) {
     /* the banner wider than the screen, so the sign nearly fills it (its empty sides fall off the edges),
