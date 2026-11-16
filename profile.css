@@ -1,176 +1,143 @@
-/* itch.io profile custom CSS - draft 4 (the live original is in original/profile.css)
-   The site's pixel style: square corners and hard offset shadows, no outlines,
-   in the site palette (plum #23093f, paper #f1ebf7, pink #d14081). */
+/* itch.io profile custom CSS - draft 5: "screens in the sky" (draft 4 is in git history; the
+   pre-redesign original in original/profile.css).
+   A neon sign for a banner (banner/banner.png, the header image), slim screens for the bio and the
+   game covers, and pixel-art sprites with a pink glow floating over it all, on the contour-traces
+   background (bg/art_traces.png, the page background in the theme editor).
+   The sprites load from the site's images/sprites/itch-*.png (built by build_sprites.sh).
+   Written with CSS nesting ("& ..." inside a rule) to fit itch's 5120-character limit. */
 
-/* Pixelify Sans (the site's pixel font) for titles only; Chakra Petch for reading: squared-off and
-   arcade-ish, but an ordinary text face */
-@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Chakra+Petch:wght@400;500;600&display=swap");
-
-.user_page .user_profile.formatted,
-.game_grid_widget .game_cell .game_text,
-.game_grid_widget .game_cell .game_genre { font-family: "Chakra Petch", sans-serif; }
-
-/* bio: a solid plum card with a pink hard shadow, as wide as the banner and the grid
-   (minus the shadow, so it lines up with their right edge). The top margin leaves room for the robot. */
-.user_page .user_profile.formatted {
-    position: relative;
-    background: #23093f;
-    border: 0;
-    border-radius: 0;
-    box-shadow: 6px 6px 0 #d14081;
-    box-sizing: border-box;
-    width: calc(100% - 6px);
-    padding: 24px 28px;
-    margin-top: 64px;
-    margin-bottom: 40px;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.55;
-    color: #e6def2;
-}
-/* even spacing: a fixed gap between paragraphs, none above the first or below the last */
-.user_page .user_profile.formatted p { margin: 0 0 14px; }
-.user_page .user_profile.formatted p:last-child { margin-bottom: 0; }
-.user_page .user_profile.formatted p:has(> img:only-child) { margin: 0; }   /* the robot's own line */
-.user_page .user_profile.formatted img + br { display: none; }
-
-/* the robot walks along the top edge of the card, as it walks along the divider on the landing page.
-   Upload robot_walk_sheet.png (ten 64px frames side by side) at the very start of the bio.
-   Its feet are 52px down the frame, so top: -52px stands it on the edge. */
-.user_page .user_profile.formatted img {
-    position: absolute;
-    top: -52px;
-    left: 24px;
-    width: 64px !important;
-    height: 64px !important;
-    max-width: none;
-    object-fit: none;
-    object-position: 0 0;
-    image-rendering: pixelated;
-    animation: robot-legs 0.91s steps(10) infinite, robot-walk 60s linear infinite;
-}
-@keyframes robot-legs { to { object-position: -640px 0; } }
-/* about 38 px/s like the site: right, a short rest, turn, back */
-@keyframes robot-walk {
-    0%   { left: 24px;                transform: scaleX(1); }
-    47%  { left: calc(100% - 88px);   transform: scaleX(1); }
-    50%  { left: calc(100% - 88px);   transform: scaleX(-1); }
-    97%  { left: 24px;                transform: scaleX(-1); }
-    100% { left: 24px;                transform: scaleX(1); }
-}
-
-/* three jets drifting in the left margin, well clear of the card, in the formation they fly beside the
-   site's arcade. ::before draws two of them (two backgrounds on one box), ::after the third, so they bob
-   out of step. They load from the site. */
-.user_page .user_profile.formatted::before,
-.user_page .user_profile.formatted::after {
-    content: "";
-    position: absolute;
-    background: url("https://20akshay00.github.io/images/sprites/jet1.png") no-repeat;
-    image-rendering: pixelated;
-    pointer-events: none;
-    animation: jet-float 4.5s ease-in-out infinite;
-}
-.user_page .user_profile.formatted::before {      /* lead jet (2x) and the low one */
-    left: -200px;
-    top: -10px;
-    width: 120px;
-    height: 150px;
-    background-image: url("https://20akshay00.github.io/images/sprites/jet1.png"),
-                      url("https://20akshay00.github.io/images/sprites/jet1.png");
-    background-size: 44px 42px, 34px 32px;
-    background-position: 12px 0, 0 116px;
-}
-.user_page .user_profile.formatted::after {       /* the one out ahead */
-    left: -118px;
-    top: 52px;
-    width: 32px;
-    height: 31px;
-    background-size: 100% 100%;
-    animation-delay: 1.4s;
-}
-@keyframes jet-float {
-    0%, 100% { translate: 0 0; }
-    50%      { translate: 0 -7px; }
-}
-
-/* the winged flyer drifts in the right margin, hung off the game grid (the bio's two slots hold the jets) */
-.game_grid_widget { position: relative; }
-.game_grid_widget::before {                       /* flyer.png, 103 x 67 at 1x */
-    content: "";
-    position: absolute;
-    right: -150px;
-    top: -40px;
-    width: 103px;
-    height: 67px;
-    background: url("https://20akshay00.github.io/images/sprites/flyer.png") 0 0 / 100% 100% no-repeat;
-    image-rendering: pixelated;
-    pointer-events: none;
-    animation: drift 7s ease-in-out infinite;
-}
-/* a lazier, wider loop than the jets' bob */
-@keyframes drift {
-    0%, 100% { translate: 0 0; }
-    30%      { translate: -6px -10px; }
-    65%      { translate: 4px -4px; }
-}
-
-/* the margins are only free on wide screens: below that the drifters would sit on the content */
-@media (max-width: 1380px) {   /* the 960px column + ~200px each side for the jets */
-    .user_page .user_profile.formatted::before,
-    .user_page .user_profile.formatted::after,
-    .game_grid_widget::before { display: none; }
-}
-/* phones: a shorter walk */
-@media (max-width: 700px) {
-    .user_page .user_profile.formatted img { animation: robot-legs 0.91s steps(10) infinite, robot-walk 16s linear infinite; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .user_page .user_profile.formatted img,
-    .user_page .user_profile.formatted::before,
-    .user_page .user_profile.formatted::after,
-    .game_grid_widget::before { animation: none; }
-}
-
-/* every sprite wears the site's sticker edge (.sticker in theme/_notebook.scss): 2px of white all round
-   and a small soft shadow, so they read as stickers on the page rather than part of the background */
-.user_page .user_profile.formatted::before,
-.user_page .user_profile.formatted::after,
-.game_grid_widget::before {
-    filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff)
-            drop-shadow(0 -2px 0 #fff) drop-shadow(1px 3px 3px rgba(0,0,0,.22));
-}
-/* the robot is small with thin limbs: 2px would fill the gaps between its legs, so it gets 1px */
-.user_page .user_profile.formatted img {
-    filter: drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff)
-            drop-shadow(0 -1px 0 #fff) drop-shadow(1px 3px 3px rgba(0,0,0,.22));
-}
+@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@700&family=Chakra+Petch:wght@500;600&display=swap");
 
 /* the "20akshay00" link under the banner repeats the banner */
 .user_page span.link_group { display: none; }
 
-/* game covers: no card around them (the cells differ in height, so cards look ragged); the cover gets a
-   plum hard shadow, and on hover it lifts and the shadow turns pink */
-.game_grid_widget .game_cell .game_thumb {
-    border-radius: 0;
-    box-shadow: 6px 6px 0 #23093f;
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
+/* ---- bio: a slim screen. A title bar (the first background), scanlines, the glass; the inset
+   shadow darkens the corners of the tube ---- */
+.user_page .user_profile.formatted {
+    position: relative;
+    margin: 100px 0 56px;
+    padding: 52px 36px 30px;
+    border: 8px solid #24133a;
+    border-radius: 16px;
+    background:
+        linear-gradient(#3a1f5c, #2a1648) 0 0 / 100% 30px no-repeat,
+        repeating-linear-gradient(180deg, rgba(0,0,0,.14) 0 1px, transparent 1px 3px),
+        radial-gradient(ellipse at 50% 40%, #241243, #120a22 85%);
+    box-shadow: inset 0 0 50px rgba(0,0,0,.6), 0 0 0 2px #0d0616, 0 6px 0 2px #0d0616, 0 20px 36px rgba(0,0,0,.4);
+    font: 500 18px/1.6 "Chakra Petch", sans-serif;
+    color: #ece0fb;
+    text-shadow: 0 0 8px rgba(200,140,255,.35);
+
+    & p { margin: 0 0 16px; }
+    & p:last-child, & p:has(> img:only-child) { margin: 0; }   /* (the robot has a line of its own) */
+    & img + br { display: none; }
+    & strong { color: #ff8cc6; font-weight: 600; }
+    /* title bar: a label on the left, three lights on the right */
+    &::before {
+        content: "ABOUT.TXT"; position: absolute; top: 6px; left: 16px;
+        font: 700 17px/1 "Pixelify Sans", sans-serif; letter-spacing: 2px; color: #c9b0ee; text-shadow: none;
+    }
+    &::after {
+        content: ""; position: absolute; top: 10px; right: 16px; width: 10px; height: 10px;
+        background: #ff6fae; box-shadow: -16px 0 0 #b48cf0, -32px 0 0 #6fe3a5;
+    }
+    /* a blinking cursor after the last line */
+    & p:last-child::after {
+        content: ""; display: inline-block; width: 10px; height: 20px; margin-left: 6px; vertical-align: -4px;
+        background: #ff8cc6; box-shadow: 0 0 8px #ff6fae; animation: blink 1s steps(1) infinite;
+    }
+    /* the robot walks along the top of the bezel. Upload robot_walk_glow.png (ten 64px frames side by
+       side, the glow baked in) at the very start of the bio. Its feet are 52px down the frame; the
+       bezel is 8px. walk moves it, flip turns it (steps(1) holds each keyframe until the next). */
+    & img {
+        position: absolute; top: -60px; left: 40px;
+        width: 64px !important; height: 64px !important; max-width: none;
+        object-fit: none; object-position: 0 0; image-rendering: pixelated;
+        animation: legs .91s steps(10) infinite, walk 50s linear infinite, flip 50s steps(1) infinite;
+    }
 }
-.game_grid_widget .game_cell:hover .game_thumb {
-    transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0 #d14081;
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes legs { to { object-position: -640px 0; } }
+@keyframes walk { 47%, 50% { left: calc(100% - 110px); } 97% { left: 40px; } }
+@keyframes flip { 50% { transform: scaleX(-1); } 97% { transform: none; } }
+
+/* ---- game covers: little monitors with scanlines; on hover they lift, light up and blink
+   PRESS START ---- */
+.game_grid_widget { position: relative; }
+.game_grid_widget .game_cell {
+    & .game_thumb {
+        position: relative;
+        border: 12px solid #24133a; border-radius: 18px; overflow: hidden;
+        box-shadow: 0 0 0 3px #0d0616, 0 8px 0 3px #0d0616;
+        transition: transform .12s, box-shadow .12s;
+    }
+    & .game_thumb img { filter: brightness(.8) saturate(.9); }
+    & .game_thumb::after {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: repeating-linear-gradient(180deg, rgba(0,0,0,.22) 0 2px, transparent 2px 4px);
+        box-shadow: inset 0 0 36px rgba(0,0,0,.75);
+    }
+    & .game_thumb::before {
+        content: "PRESS START"; position: absolute; z-index: 2; left: 0; right: 0; bottom: 14px; text-align: center;
+        font: 700 18px "Pixelify Sans", sans-serif; letter-spacing: 2px; color: #fff;
+        text-shadow: 0 2px 0 #23093f, 0 0 10px #ff6fae; opacity: 0;
+    }
+    &:hover .game_thumb {
+        transform: translateY(-4px);
+        box-shadow: 0 0 0 3px #0d0616, 0 12px 0 3px #0d0616, 0 0 30px rgba(255,111,174,.45);
+    }
+    &:hover .game_thumb img { filter: none; }
+    &:hover .game_thumb::before { opacity: 1; animation: blink .8s steps(1) infinite; }
+    & .game_title a { font: 700 20px/1.2 "Pixelify Sans", sans-serif; color: #ff8cc6; text-shadow: 0 0 10px rgba(255,111,174,.45); }
+    & .game_text { font: 500 15px/1.4 "Chakra Petch", sans-serif; color: #e6def2; }
+    & .game_genre { font: 500 13px "Chakra Petch", sans-serif; color: #a58fc8; text-transform: uppercase; letter-spacing: 1px; }
+    & .web_flag { background: #d14081; border-radius: 0; }
 }
 
-/* card text: pixel titles, readable taglines, quieter genre */
-.game_grid_widget .game_cell .game_title,
-.game_grid_widget .game_cell .game_title a {
-    font-family: "Pixelify Sans", sans-serif;
-    font-weight: 700;
-    color: #ff6fae;
+/* ---- floating sprites (protocol-relative URLs into the site's images/sprites/) ----
+   Banner: drawn over the header image (which holds only the sign) so they can float. The flyer
+   drifts in front at the top left; the island and the tank on its rock float along the bottom, their
+   ground lines level at 300px, running a little past the column into the margins. Sizes are the
+   stickers' own (2x) except the tank, shown at 80% (1.6x the original sprite).
+   Margins: three jets in formation on the left, the cage on the right. */
+#profile_header, #profile_header .image_header { position: relative; }
+#profile_header .image_header { z-index: 1; }
+#profile_header::before, #profile_header::after, #profile_header .image_header::after,
+.game_grid_widget::before, .game_grid_widget::after {
+    content: ""; position: absolute; pointer-events: none; image-rendering: pixelated;
+    background: no-repeat 0 0 / 100% 100%;
 }
-.game_grid_widget .game_cell .game_text { color: #e6def2; }
-.game_grid_widget .game_cell .game_genre { color: #a58fc8; }
-
-/* "Play in browser" flag: site pink, square */
-.game_grid_widget .game_cell .web_flag { background: #d14081; border-radius: 0; }
+#profile_header .image_header::after {            /* 506x256: ground 70px down */
+    left: -50px; top: 230px; width: 506px; height: 256px;
+    background-image: url(//20akshay00.github.io/images/sprites/itch-island.png);
+    animation: bob 6.5s ease-in-out infinite;
+}
+#profile_header::before {                         /* 300x292 at 80%: ground 110px down */
+    z-index: 2; right: 30px; top: 190px; width: 240px; height: 234px; transform: rotate(5deg);
+    background-image: url(//20akshay00.github.io/images/sprites/itch-tankrock.png);
+    animation: bob 5.5s ease-in-out infinite 1.2s;
+}
+#profile_header::after {                          /* 238x166, turned to face right */
+    z-index: 2; left: -96px; top: -22px; width: 238px; height: 166px; transform: scaleX(-1);
+    background-image: url(//20akshay00.github.io/images/sprites/itch-flyer.png);
+    animation: drift 7s ease-in-out infinite;
+}
+.game_grid_widget::before {                       /* 150x170 */
+    left: -230px; top: -340px; width: 150px; height: 170px;
+    background-image: url(//20akshay00.github.io/images/sprites/itch-jets.png);
+    animation: bob 4.5s ease-in-out infinite;
+}
+.game_grid_widget::after {                        /* 92x82 */
+    right: -200px; top: -300px; width: 92px; height: 82px;
+    background-image: url(//20akshay00.github.io/images/sprites/itch-cage.png);
+    animation: bob 4.5s ease-in-out infinite 1.3s;
+}
+@keyframes bob { 50% { translate: 0 -7px; } }
+@keyframes drift { 30% { translate: -6px -10px; } 65% { translate: 4px -4px; } }
+/* below 1380px the margins aren't free: the margin stickers go, the banner's pull inside */
+@media (max-width: 1380px) {
+    .game_grid_widget::before, .game_grid_widget::after { display: none; }
+    #profile_header::before { right: 0; }
+    #profile_header .image_header::after { left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation: none !important; } }
