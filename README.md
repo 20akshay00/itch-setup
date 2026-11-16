@@ -36,6 +36,8 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
   stay lined up at any screen width. Change the background and rebuild both.
 - **The CSS uses nesting** to fit in 5120 characters.
 - **itch filters the CSS**: it silently drops some properties, like `zoom` and `scale`. `transform` gets through.
-- **The banner is shown at 75%** (a CSS transform on the header), so the banner image and the sprites
-  around it shrink together.
-- **On narrow screens** (below 1100px) the banner's sprites pull in.
+- **The banner is shown at 720px wide** (75%), and the sprites around it are placed in percentages of
+  it, so they scale together when itch shrinks the banner on phones.
+- **Phones** (below 600px) get their own layout: a bigger sign, the sprites pulled in, even card gaps, a
+  shorter robot cycle, and on touch screens no hover effects.
+- **The CSS is almost exactly at the limit** (about 5100 of 5120). Anything new needs something cut.
