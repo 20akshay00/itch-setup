@@ -149,9 +149,9 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 /* ---- phones ---- */
 @media (max-width: 600px) {
     /* the banner wider than the screen, so the sign nearly fills it (its empty sides fall off the edges),
-       a little lower; the island and the tank pulled in around it, grounds still level */
-    #profile_header { max-width: none; width: 125%; margin: 14px -12.5% 0; }
-    #profile_header::after { display: none; }   /* no room for the flyer: it covered the sign's label */
+       lower, with the flyer over its top corner; the island and the tank pulled in around it, grounds still level */
+    #profile_header { max-width: none; width: 125%; margin: 44px -12.5% 0; }
+    #profile_header::after { left: 10%; top: -10%; width: 18%; height: 30%; }   /* the flyer smaller, over the sign's corner */
     #profile_header .image_header::after { left: 8%; top: 60.4%; width: 44%; height: 53.4%; }
     #profile_header::before { right: 9%; top: 55.6%; width: 22%; height: 51.5%; }
     /* the robot's walk is timed: a shorter cycle for the shorter bezel keeps its pace */
