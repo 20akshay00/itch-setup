@@ -29,7 +29,7 @@
 
     & p { margin: 0 0 16px; }
     & p:last-child, & p:has(> img:only-child) { margin: 0; }   /* (the robot has a line of its own) */
-    & img + br { display: none; }
+    & br { display: none; }   /* itch's editor leaves stray line breaks; paragraphs are spaced by margins */
     & strong { color: #ff8cc6; font-weight: 600; }
     /* title bar: a label on the left, three lights on the right */
     &::before {
@@ -99,6 +99,8 @@
    ground lines level at 300px, running a little past the column into the margins. Sizes are the
    stickers' own (2x) except the tank, shown at 80% (1.6x the original sprite).
    Margins: three jets in formation on the left, the cage on the right. */
+/* itch's header spans the whole window with the banner centred in it; pin it to the banner's 960px */
+#profile_header { max-width: 960px; margin: 0 auto; }
 #profile_header, #profile_header .image_header { position: relative; }
 #profile_header .image_header { z-index: 1; }
 #profile_header::before, #profile_header::after, #profile_header .image_header::after,
@@ -126,8 +128,8 @@
     background-image: url(//20akshay00.github.io/itch-setup/jets.png);
     animation: bob 4.5s ease-in-out infinite;
 }
-.game_grid_widget::after {                        /* 92x82 */
-    right: -200px; top: -300px; width: 92px; height: 82px;
+.game_grid_widget::after {                        /* 116x106 */
+    right: -212px; top: -312px; width: 116px; height: 106px;
     background-image: url(//20akshay00.github.io/itch-setup/cage.png);
     animation: bob 4.5s ease-in-out infinite 1.3s;
 }
