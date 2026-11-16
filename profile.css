@@ -15,7 +15,7 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 /* signals running along the background's traces: docs/signals.png, an animated tile laid over the
    background with its anchor (top centre) and size, so the pulses stay on the traces at any width.
    The wrap's stacking context keeps it above the wrap's own background and below the page. */
-.user_page_wrap { position: relative; z-index: 0; }
+.user_page_wrap { position: relative; z-index: 0; overflow-x: clip; }   /* (clip: what sticks out past the window is cut off rather than widening the page, which phones zoom out to fit) */
 .user_page_wrap::before {
     content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; image-rendering: pixelated;
     background: url(//20akshay00.github.io/itch-setup/signals.png) 50% 0 / 1280px;
@@ -34,21 +34,21 @@ html, body { background: #260a4b; overscroll-behavior: none; }
     border-radius: 16px;
     background:
         linear-gradient(#3a1f5c, #2a1648) 0 0 / 100% 30px no-repeat,
-        repeating-linear-gradient(180deg, rgba(0,0,0,.14) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(180deg, #0002 0 1px, transparent 1px 3px),
         radial-gradient(ellipse at 50% 40%, #241243, #120a22 85%);
-    box-shadow: inset 0 0 50px rgba(0,0,0,.6), 0 0 0 2px #0d0616, 0 6px 0 2px #0d0616, 0 20px 36px rgba(0,0,0,.4);
+    box-shadow: inset 0 0 50px #0009, 0 0 0 2px #0d0616, 0 6px 0 2px #0d0616, 0 20px 36px #0006;
     font: 500 18px/1.6 "Chakra Petch", sans-serif;
     color: #ece0fb;
     text-shadow: 0 0 8px rgba(200,140,255,.35);
 
     & p { margin: 0 0 16px; }
-    & p:last-child, & p:has(> img:only-child) { margin: 0; }   /* (the robot has a line of its own) */
+    & p:last-child { margin: 0; }
     & br { display: none; }   /* itch's editor leaves stray line breaks; paragraphs are spaced by margins */
     & strong { color: #ff8cc6; font-weight: 600; }
     /* title bar: a label on the left, three lights on the right */
     &::before {
         content: "ABOUT.TXT"; position: absolute; top: 6px; left: 16px;
-        font: 700 17px/1 "Pixelify Sans", sans-serif; letter-spacing: 2px; color: #c9b0ee; text-shadow: none;
+        font: 700 17px/1 "Pixelify Sans"; letter-spacing: 2px; color: #c9b0ee; text-shadow: none;
     }
     &::after {
         content: ""; position: absolute; top: 10px; right: 16px; width: 10px; height: 10px;
@@ -88,17 +88,17 @@ html, body { background: #260a4b; overscroll-behavior: none; }
         position: relative;
         border: 12px solid #24133a; border-radius: 18px; overflow: hidden;
         box-shadow: 0 0 0 3px #0d0616, 0 8px 0 3px #0d0616;
-        transition: transform .12s, box-shadow .12s;
+        transition: .12s;
     }
     & .game_thumb img { filter: brightness(.8) saturate(.9); }
     & .game_thumb::after {
         content: ""; position: absolute; inset: 0; pointer-events: none;
-        background: repeating-linear-gradient(180deg, rgba(0,0,0,.22) 0 2px, transparent 2px 4px);
-        box-shadow: inset 0 0 36px rgba(0,0,0,.75);
+        background: repeating-linear-gradient(180deg, #0003 0 2px, transparent 2px 4px);
+        box-shadow: inset 0 0 36px #000b;
     }
     & .game_thumb::before {
         content: "PRESS START"; position: absolute; z-index: 2; left: 0; right: 0; bottom: 14px; text-align: center;
-        font: 700 18px "Pixelify Sans", sans-serif; letter-spacing: 2px; color: #fff;
+        font: 700 18px "Pixelify Sans"; letter-spacing: 2px; color: #fff;
         text-shadow: 0 2px 0 #23093f, 0 0 10px #ff6fae; opacity: 0;
     }
     &:hover .game_thumb {
@@ -130,24 +130,36 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 #profile_header .image_header::after {            /* 506x256 at (-50, 230): ground 70px down */
     left: -5.2%; top: 57.5%; width: 52.7%; height: 64%;
     background-image: url(//20akshay00.github.io/itch-setup/island.png);
-    animation: bob 6.5s ease-in-out infinite;
+    animation: bob 6.5s infinite;
 }
 #profile_header::before {                         /* 300x292 at 80%, 30 from the right, 190 down: ground 110px down */
     z-index: 2; right: 3.1%; top: 47.5%; width: 25%; height: 58.5%; transform: rotate(5deg);
     background-image: url(//20akshay00.github.io/itch-setup/tank.png);
-    animation: bob 5.5s ease-in-out infinite 1.2s;
+    animation: bob 5.5s infinite 1.2s;
 }
 #profile_header::after {                          /* 238x166 at (-96, -22), turned to face right */
     z-index: 2; left: -10%; top: -5.5%; width: 24.8%; height: 41.5%; transform: scaleX(-1);
     background-image: url(//20akshay00.github.io/itch-setup/flyer.png);
-    animation: drift 7s ease-in-out infinite;
+    animation: drift 7s infinite;
 }
 @keyframes bob { 50% { translate: 0 -7px; } }
 @keyframes drift { 30% { translate: -6px -10px; } 65% { translate: 4px -4px; } }
-/* what sticks out past the window is cut off, rather than widening the page (phones then zoom out to fit it) */
-.user_page_wrap { overflow-x: clip; }
 /* touch screens have no hover: PRESS START stayed up after a tap */
 @media (hover: none) { .game_grid_widget .game_thumb::before { display: none; } }
+/* ---- phones ---- */
+@media (max-width: 600px) {
+    /* the banner wider than the screen, so the sign nearly fills it (its empty sides fall off the edges),
+       a little lower; the island and the tank pulled in around it, grounds still level */
+    #profile_header { max-width: none; width: 125%; margin: 14px -12.5% 0; }
+    #profile_header::after { display: none; }   /* no room for the flyer: it covered the sign's label */
+    #profile_header .image_header::after { left: 8%; top: 60.4%; width: 44%; height: 53.4%; }
+    #profile_header::before { right: 9%; top: 55.6%; width: 22%; height: 51.5%; }
+    /* the robot's walk is timed: a shorter cycle for the shorter bezel keeps its pace */
+    .user_page .user_profile.formatted img { animation-duration: .91s, 16s, 16s, 16s; }
+    /* even gaps both ways: the cards' outline is 3px all round, their base 11px below */
+    .game_grid_widget { gap: 26px 18px; }
+    .game_grid_widget .game_cell { margin: 0; & .game_thumb { border-width: 8px; } }
+}
 @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after { animation: none !important; }
     .user_page_wrap::before { display: none; }
