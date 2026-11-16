@@ -92,10 +92,9 @@ html, body { background: #260a4b; overscroll-behavior: none; }
     }
     &:hover .game_thumb img { filter: none; }
     &:hover .game_thumb::before { opacity: 1; animation: blink .8s steps(1) infinite; }
-    & .game_title a { font: 700 20px/1.2 "Pixelify Sans", sans-serif; color: #ff8cc6; text-shadow: 0 0 10px rgba(255,111,174,.45); }
+    /* the covers carry the names; only the one-line pitch stays under them */
+    & .game_title, & .game_genre, & .game_platform { display: none; }
     & .game_text { font: 500 15px/1.4 "Chakra Petch", sans-serif; color: #e6def2; }
-    & .game_genre { font: 500 13px "Chakra Petch", sans-serif; color: #a58fc8; text-transform: uppercase; letter-spacing: 1px; }
-    & .web_flag { background: #d14081; border-radius: 0; }
 }
 
 /* ---- floating sprites (from docs/, via GitHub Pages) ----
