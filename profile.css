@@ -114,41 +114,40 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 /* ---- floating sprites (from docs/, via GitHub Pages) ----
    Banner: drawn over the header image (which holds only the sign) so they can float. The flyer
    drifts in front at the top left; the island and the tank on its rock float along the bottom, their
-   ground lines level at 300px, running a little past the column into the margins. Sizes are the
-   stickers' own (2x) except the tank, shown at 80% (1.6x the original sprite), all before the
-   header's 75% shrink. */
-/* itch's header spans the whole window with the banner centred in it; pin it to the banner's 960px,
-   then shrink the sign and its sprites together to 75%, from the top (the -100px margin takes back
-   the space the shrink leaves; itch's CSS filter drops zoom and the scale property, so it's a transform) */
-#profile_header { max-width: 960px; margin: 0 auto -100px; transform: translateY(-50px) scale(.75); }
+   ground lines level, running a little past the banner's edges. Positions and sizes are percentages
+   of the banner (worked out on the 960x400 image: the stickers at their own 2x, the tank at 80%), so
+   they scale with it - itch shrinks the banner to fit phones.
+   itch's header spans the whole window with the banner centred in it: pin it to 720px (the banner at
+   75%), and let the banner fill it. */
+#profile_header { max-width: 720px; margin: 0 auto; }
+#profile_header .image_header img { display: block; width: 100%; height: auto; }
 #profile_header, #profile_header .image_header { position: relative; }
 #profile_header .image_header { z-index: 1; }
 #profile_header::before, #profile_header::after, #profile_header .image_header::after {
     content: ""; position: absolute; pointer-events: none; image-rendering: pixelated;
     background: no-repeat 0 0 / 100% 100%;
 }
-#profile_header .image_header::after {            /* 506x256: ground 70px down */
-    left: -50px; top: 230px; width: 506px; height: 256px;
+#profile_header .image_header::after {            /* 506x256 at (-50, 230): ground 70px down */
+    left: -5.2%; top: 57.5%; width: 52.7%; height: 64%;
     background-image: url(//20akshay00.github.io/itch-setup/island.png);
     animation: bob 6.5s ease-in-out infinite;
 }
-#profile_header::before {                         /* 300x292 at 80%: ground 110px down */
-    z-index: 2; right: 30px; top: 190px; width: 240px; height: 234px; transform: rotate(5deg);
+#profile_header::before {                         /* 300x292 at 80%, 30 from the right, 190 down: ground 110px down */
+    z-index: 2; right: 3.1%; top: 47.5%; width: 25%; height: 58.5%; transform: rotate(5deg);
     background-image: url(//20akshay00.github.io/itch-setup/tank.png);
     animation: bob 5.5s ease-in-out infinite 1.2s;
 }
-#profile_header::after {                          /* 238x166, turned to face right */
-    z-index: 2; left: -96px; top: -22px; width: 238px; height: 166px; transform: scaleX(-1);
+#profile_header::after {                          /* 238x166 at (-96, -22), turned to face right */
+    z-index: 2; left: -10%; top: -5.5%; width: 24.8%; height: 41.5%; transform: scaleX(-1);
     background-image: url(//20akshay00.github.io/itch-setup/flyer.png);
     animation: drift 7s ease-in-out infinite;
 }
 @keyframes bob { 50% { translate: 0 -7px; } }
 @keyframes drift { 30% { translate: -6px -10px; } 65% { translate: 4px -4px; } }
-/* on narrow screens the banner's sprites pull inside */
-@media (max-width: 1100px) {
-    #profile_header::before { right: 0; }
-    #profile_header .image_header::after { left: 0; }
-}
+/* what sticks out past the window is cut off, rather than widening the page (phones then zoom out to fit it) */
+.user_page_wrap { overflow-x: clip; }
+/* touch screens have no hover: PRESS START stayed up after a tap */
+@media (hover: none) { .game_grid_widget .game_thumb::before { display: none; } }
 @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after { animation: none !important; }
     .user_page_wrap::before { display: none; }
