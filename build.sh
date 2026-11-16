@@ -33,5 +33,6 @@ $PY scripts/background.py upload/background.png
 # the link-preview card: the cover of a placeholder project the CSS hides (needs the images above)
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --allow-file-access-from-files     --virtual-time-budget=5000 --window-size=1200,600     --screenshot="$(cygpath -w "$PWD/upload/card.png")" "file:///$(cygpath -m "$PWD/art/card.html")" 2>/dev/null
 $PY scripts/minify.py profile.css upload/profile.min.css
+$PY scripts/minify.py placeholder.css upload/placeholder.min.css
 
 echo "built: $(ls docs | tr '\n' ' ')| $(ls upload | tr '\n' ' ')"

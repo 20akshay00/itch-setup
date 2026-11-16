@@ -7,6 +7,7 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
 |               |                                                                                                                            |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `profile.css` | The profile's custom CSS. Edit this one.                                                                                   |
+| `placeholder.css` | The custom CSS for the link-card placeholder project's own page: just the sign and a way back to the profile.   |
 | `art/`        | The pixel art everything is built from: the sprites, the robot's walk and idle sheets, the two rocks, and the banner (an HTML page). |
 | `upload/`     | What goes into itch by hand: the banner, the background, the robot, and the minified CSS. Built, don't edit.               |
 | `docs/`       | The floating sprites and the trace signals. GitHub Pages serves this folder, and the CSS loads them from it. Built, don't edit. |
@@ -42,5 +43,6 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
   shorter robot cycle, and on touch screens no hover effects.
 - **The link preview** (Discord, Twitter, ...) is `upload/card.png`. itch uses the cover of the first
   project in the profile's grid, so it's the cover of a placeholder project (ID 5384024) that has to stay
-  first, and the CSS hides it.
+  first, and the CSS hides it. Its own page gets `upload/placeholder.min.css`: only the sign and an
+  "open profile" button, and a click anywhere on the page goes to the profile (CSS can't redirect).
 - **The CSS is almost exactly at the limit** (about 5100 of 5120). Anything new needs something cut.
