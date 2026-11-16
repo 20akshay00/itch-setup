@@ -130,20 +130,22 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 #profile_header .image_header::after {            /* 506x256 at (-50, 230): ground 70px down */
     left: -5.2%; top: 57.5%; width: 52.7%; height: 64%;
     background-image: url(//20akshay00.github.io/itch-setup/island.png);
-    animation: bob 6.5s infinite;
+    animation: bob 7.3s infinite;
 }
 #profile_header::before {                         /* 300x292 at 80%, 30 from the right, 190 down: ground 110px down */
     z-index: 2; right: 3.1%; top: 47.5%; width: 25%; height: 58.5%; transform: rotate(5deg);
     background-image: url(//20akshay00.github.io/itch-setup/tank.png);
-    animation: bob 5.5s infinite 1.2s;
+    animation: bob 5.1s infinite -2.6s;
 }
 #profile_header::after {                          /* 238x166 at (-96, -22), turned to face right */
     z-index: 2; left: -10%; top: -5.5%; width: 24.8%; height: 41.5%; transform: scaleX(-1);
     background-image: url(//20akshay00.github.io/itch-setup/flyer.png);
-    animation: drift 7s infinite;
+    animation: drift 8.3s infinite;
 }
-@keyframes bob { 50% { translate: 0 -7px; } }
-@keyframes drift { 30% { translate: -6px -10px; } 65% { translate: 4px -4px; } }
+/* the floating is in percentages of each sprite's own size, so it calms down with them on phones; the
+   periods don't divide into each other, so the sprites never settle into step */
+@keyframes bob { 50% { translate: 0 -3.5%; } }
+@keyframes drift { 30% { translate: -3.4% -8%; } 65% { translate: 2.2% -3.2%; } }
 /* touch screens have no hover: PRESS START stayed up after a tap */
 @media (hover: none) { .game_grid_widget .game_thumb::before { display: none; } }
 /* ---- phones ---- */
