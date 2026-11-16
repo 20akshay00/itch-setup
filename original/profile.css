@@ -1,0 +1,8 @@
+.game_grid_widget .game_cell .web_flag { background: #d14081;}
+
+.user_page .user_profile.formatted {
+background: rgba(255, 255, 255, 0.2);
+border-radius:25px;
+padding:25px;
+margin-bottom:25px;
+}
