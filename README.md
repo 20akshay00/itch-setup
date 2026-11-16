@@ -31,4 +31,6 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
 - **The floating sprites** are placed by `profile.css` on top of the banner to animate motion.
 - **The glow** is baked into the images to save CSS space.
 - **The CSS uses nesting** to fit in 5120 characters.
-- **On narrow screens** (below 1380px) the margin sprites hide and the banner's pull in.
+- **The banner is shown at 75%** (CSS `zoom` on the header), so the banner image and the sprites
+  around it shrink together.
+- **On narrow screens** (below 1100px) the banner's sprites pull in.

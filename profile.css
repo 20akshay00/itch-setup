@@ -47,22 +47,22 @@
     }
     /* the robot walks along the top of the bezel. Upload upload/robot.png (ten 64px frames side by
        side, the glow baked in) at the very start of the bio. Its feet are 52px down the frame; the
-       bezel is 8px. walk moves it, flip turns it (steps(1) holds each keyframe until the next). */
+       bezel is 8px. It's shown at 1.5x (3x the pixel art). walk moves it, flip turns it (steps(1) holds each keyframe until the next). */
     & img {
         position: absolute; top: -60px; left: 40px;
         width: 64px !important; height: 64px !important; max-width: none;
         object-fit: none; object-position: 0 0; image-rendering: pixelated;
+        scale: 1.5; transform-origin: 50% 52px;   /* 1.5x, about its feet */
         animation: legs .91s steps(10) infinite, walk 50s linear infinite, flip 50s steps(1) infinite;
     }
 }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes legs { to { object-position: -640px 0; } }
-@keyframes walk { 47%, 50% { left: calc(100% - 110px); } 97% { left: 40px; } }
+@keyframes walk { 47%, 50% { left: calc(100% - 120px); } 97% { left: 40px; } }
 @keyframes flip { 50% { transform: scaleX(-1); } 97% { transform: none; } }
 
 /* ---- game covers: little monitors with scanlines; on hover they lift, light up and blink
    PRESS START ---- */
-.game_grid_widget { position: relative; }
 .game_grid_widget .game_cell {
     & .game_thumb {
         position: relative;
@@ -97,14 +97,14 @@
    Banner: drawn over the header image (which holds only the sign) so they can float. The flyer
    drifts in front at the top left; the island and the tank on its rock float along the bottom, their
    ground lines level at 300px, running a little past the column into the margins. Sizes are the
-   stickers' own (2x) except the tank, shown at 80% (1.6x the original sprite).
-   Margins: three jets in formation on the left, the cage on the right. */
-/* itch's header spans the whole window with the banner centred in it; pin it to the banner's 960px */
-#profile_header { max-width: 960px; margin: 0 auto; }
+   stickers' own (2x) except the tank, shown at 80% (1.6x the original sprite), all before the
+   header's .75 zoom. */
+/* itch's header spans the whole window with the banner centred in it; pin it to the banner's 960px,
+   then shrink the sign and its sprites together */
+#profile_header { max-width: 960px; margin: 0 auto; zoom: .75; }
 #profile_header, #profile_header .image_header { position: relative; }
 #profile_header .image_header { z-index: 1; }
-#profile_header::before, #profile_header::after, #profile_header .image_header::after,
-.game_grid_widget::before, .game_grid_widget::after {
+#profile_header::before, #profile_header::after, #profile_header .image_header::after {
     content: ""; position: absolute; pointer-events: none; image-rendering: pixelated;
     background: no-repeat 0 0 / 100% 100%;
 }
@@ -123,21 +123,10 @@
     background-image: url(//20akshay00.github.io/itch-setup/flyer.png);
     animation: drift 7s ease-in-out infinite;
 }
-.game_grid_widget::before {                       /* 150x170 */
-    left: -230px; top: -340px; width: 150px; height: 170px;
-    background-image: url(//20akshay00.github.io/itch-setup/jets.png);
-    animation: bob 4.5s ease-in-out infinite;
-}
-.game_grid_widget::after {                        /* 116x106 */
-    right: -212px; top: -312px; width: 116px; height: 106px;
-    background-image: url(//20akshay00.github.io/itch-setup/cage.png);
-    animation: bob 4.5s ease-in-out infinite 1.3s;
-}
 @keyframes bob { 50% { translate: 0 -7px; } }
 @keyframes drift { 30% { translate: -6px -10px; } 65% { translate: 4px -4px; } }
-/* below 1380px the margins aren't free: the margin stickers go, the banner's pull inside */
-@media (max-width: 1380px) {
-    .game_grid_widget::before, .game_grid_widget::after { display: none; }
+/* on narrow screens the banner's sprites pull inside */
+@media (max-width: 1100px) {
     #profile_header::before { right: 0; }
     #profile_header .image_header::after { left: 0; }
 }

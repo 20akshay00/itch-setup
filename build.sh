@@ -11,16 +11,9 @@ TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT
 mkdir -p docs upload
 
 # floating sprites: 2x with the glow
-for s in flyer cage island; do bash scripts/glow.sh "art/$s.png" "docs/$s.png"; done
+for s in flyer island; do bash scripts/glow.sh "art/$s.png" "docs/$s.png"; done
 $PY scripts/tankrock.py art/tank.png art/rock.png "$TMP/tank.png"
 bash scripts/glow.sh "$TMP/tank.png" docs/tank.png 100           # already 2x
-# three jets in formation, as one image
-bash scripts/glow.sh art/jet.png "$TMP/jet.png"
-magick -size 150x170 xc:none \
-    \( "$TMP/jet.png" -filter point -resize 52x50! \) -geometry +14+0 -composite \
-    \( "$TMP/jet.png" -filter point -resize 44x43! \) -geometry +96+58 -composite \
-    \( "$TMP/jet.png" -filter point -resize 40x39! \) -geometry +0+124 -composite \
-    docs/jets.png
 
 # for itch
 bash scripts/glow.sh art/robot.png upload/robot.png 100 0 3 60 .9  # the sheet is already 2x
