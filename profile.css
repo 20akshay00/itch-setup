@@ -9,6 +9,8 @@
 
 /* a thin pink scrollbar on the dark track (to hide it instead: scrollbar-width: none) */
 html { scrollbar-color: #d14081 #1a0b30; scrollbar-width: thin; }
+/* behind the background image: dark instead of the theme's white, which showed on overscroll, and no bounce */
+html, body { background: #260a4b; overscroll-behavior: none; }
 
 /* the "20akshay00" link under the banner repeats the banner */
 .user_page span.link_group { display: none; }
