@@ -69,6 +69,7 @@ html, body { background: #260a4b; overscroll-behavior: none; }
 /* ---- game covers: little monitors with scanlines; on hover they lift, light up and blink
    PRESS START ---- */
 .game_grid_widget .game_cell {
+    margin-bottom: 30px;
     & .game_thumb {
         position: relative;
         border: 12px solid #24133a; border-radius: 18px; overflow: hidden;
@@ -92,20 +93,8 @@ html, body { background: #260a4b; overscroll-behavior: none; }
     }
     &:hover .game_thumb img { filter: none; }
     &:hover .game_thumb::before { opacity: 1; animation: blink .8s steps(1) infinite; }
-    /* the covers carry the names; only the one-line pitch stays under them, as a terminal line on a
-       little screen of its own (one height for all, so the row lines up: three lines fit) */
-    & .game_title, & .game_genre, & .game_platform { display: none; }
-    & .game_cell_data {
-        margin-top: 18px; padding: 10px 14px 10px 10px; min-height: 88px; box-sizing: border-box;
-        border: 3px solid #24133a; border-radius: 10px;
-        background: repeating-linear-gradient(180deg, rgba(0,0,0,.14) 0 1px, transparent 1px 3px), linear-gradient(#1c0e33, #120a22);
-        box-shadow: inset 0 0 18px rgba(0,0,0,.6), 0 0 0 2px #0d0616, 0 4px 0 2px #0d0616;
-    }
-    & .game_text { position: relative; padding-left: 22px; font: 500 15px/1.45 "Chakra Petch", sans-serif; color: #c9b0ee; }
-    & .game_text::before {
-        content: ">"; position: absolute; left: 4px; top: 0;
-        font: 700 16px/1.35 "Pixelify Sans", sans-serif; color: #ff6fae; text-shadow: 0 0 8px #ff6fae;
-    }
+    /* no text under the covers: they carry the names, the pages the rest */
+    & .game_cell_data { display: none; }
 }
 
 /* ---- floating sprites (from docs/, via GitHub Pages) ----
