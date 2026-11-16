@@ -14,9 +14,11 @@ from background import N, LEVELS, height_field, segments
 
 FRAMES, MS = 240, 50            # a 12-second loop at 20 fps
 RUN = 150                       # how far a pulse travels, in pixels (one pixel per frame)
-PULSES = 14                     # per tile
+PULSES = 8                      # per tile
+APART = 16                      # how close two pulses' runs may come, if they run at the same time
 TAIL, FADE = 22, 18             # tail length; fade-in/out at the ends of a run
-HEAD, GLOW = (255, 226, 240), (255, 111, 174)
+HEAD, GLOW = (255, 190, 222), (255, 111, 174)
+BRIGHT, HALO = .75, .32         # the head's opacity; the glow's cap
 rng = np.random.default_rng(5)
 
 
@@ -61,6 +63,17 @@ def pixels(nodes):
     return out
 
 
+def meets(run1, start1, run2, start2):
+    """Whether two pulses are on screen at the same time, with their runs closer than APART somewhere."""
+    gap = abs(start1 - start2) % FRAMES
+    if min(gap, FRAMES - gap) >= RUN + TAIL:
+        return False
+    a, b = np.array(run1)[:, None, :] % N, np.array(run2)[None, :, :] % N
+    d = np.abs(a - b)
+    d = np.minimum(d, N - d).max(-1)                            # distance across the tile's wrap-around
+    return d.min() < APART
+
+
 def blur_kernel(sigma):
     """A Gaussian in Fourier space; multiplying by it blurs with the tile's wrap-around."""
     f = np.fft.fftfreq(N)
@@ -71,11 +84,13 @@ def blur_kernel(sigma):
 def main(out):
     long_paths = [p for p in paths() if len(p) >= RUN + 20]
     pulses = []
-    for _ in range(PULSES):
+    while len(pulses) < PULSES:                                 # draw candidates; keep those that never meet another
         p = long_paths[rng.integers(len(long_paths))]
         s = rng.integers(len(p) - RUN)
         run = p[s:s + RUN][:: rng.choice([1, -1])]
-        pulses.append((run, rng.integers(FRAMES)))
+        start = rng.integers(FRAMES)
+        if all(not meets(run, start, r, t) for r, t in pulses):
+            pulses.append((run, start))
     K = blur_kernel(2.5)
     frames = []
     for t in range(FRAMES):
@@ -89,8 +104,8 @@ def main(out):
                 if 0 <= j < RUN:
                     fade = min(1, (j + 1) / FADE, (RUN - j) / FADE)
                     x, y = run[j]
-                    core[y % N, x % N] = max(core[y % N, x % N], fade * (1 - i / TAIL) ** 1.5)
-        glow = np.clip(np.real(np.fft.ifft2(np.fft.fft2(core) * K)) * 9, 0, .55)
+                    core[y % N, x % N] = max(core[y % N, x % N], BRIGHT * fade * (1 - i / TAIL) ** 1.5)
+        glow = np.clip(np.real(np.fft.ifft2(np.fft.fft2(core) * K)) * 9, 0, HALO)
         # 17 opacities x 5 mixes of head and glow colour: one fixed palette, a byte a pixel
         a = np.round(np.maximum(core, glow) * 16).astype(int)
         mix = np.round(core / np.maximum(a / 16, 1e-6) * 4).clip(0, 4).astype(int)
