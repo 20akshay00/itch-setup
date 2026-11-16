@@ -7,7 +7,7 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
 |               |                                                                                                                            |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | `profile.css` | The profile's custom CSS. Edit this one.                                                                                   |
-| `art/`        | The pixel art everything is built from: the sprites, the robot's walk sheet, the two rocks, and the banner (an HTML page). |
+| `art/`        | The pixel art everything is built from: the sprites, the robot's walk and idle sheets, the two rocks, and the banner (an HTML page). |
 | `upload/`     | What goes into itch by hand: the banner, the background, the robot, and the minified CSS. Built, don't edit.               |
 | `docs/`       | The floating sprites and the trace signals. GitHub Pages serves this folder, and the CSS loads them from it. Built, don't edit. |
 | `build.sh`    | Rebuilds `upload/` and `docs/` from `art/` and `profile.css`.                                                              |
@@ -24,7 +24,8 @@ Everything behind my itch.io profile, [20akshay00.itch.io](https://20akshay00.it
    - `banner.png` as the banner
    - `background.png` as the background image
    - `profile.min.css` pasted into the custom CSS box
-   - `robot.png` as the very first thing in the bio text (the CSS turns it into the walking robot)
+   - `robot.png` as the very first thing in the bio text (the CSS hides it and draws the walking robot
+     from `docs/robot.png` in its place)
 
 ## Notes
 

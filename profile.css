@@ -59,19 +59,24 @@ html, body { background: #260a4b; overscroll-behavior: none; }
         content: ""; display: inline-block; width: 10px; height: 20px; margin-left: 6px; vertical-align: -4px;
         background: #ff8cc6; box-shadow: 0 0 8px #ff6fae; animation: blink 1s steps(1) infinite;
     }
-    /* the robot walks along the top of the bezel. Upload upload/robot.png (ten 64px frames side by
-       side, the glow baked in) at the very start of the bio. Its feet are 52px down the frame; the
-       bezel is 8px. It's shown at 1.2x. walk moves it, flip turns it (steps(1) holds each keyframe until the next). */
+    /* the robot walks along the top of the bezel. The bio starts with an image (upload/robot.png);
+       its own picture is pushed out of view and the robot is drawn from docs/robot.png as the background:
+       64px frames, ten across, walking on the top row and idling below (the glow baked in). Its feet are
+       52px down the frame; the bezel is 8px. It's shown at 1.2x. One 50s clock: walk moves it, flip turns
+       it, rest drops to the idle row at the two stops, and legs steps along whichever row is showing
+       (steps(1) holds each keyframe until the next). */
     & img {
         position: absolute; top: -64px; left: 40px;
         width: 64px !important; height: 64px !important; max-width: none;
-        object-fit: none; object-position: 0 0; image-rendering: pixelated;
+        object-fit: none; object-position: 0 -999px; image-rendering: pixelated;
+        background: url(//20akshay00.github.io/itch-setup/robot.png) 0 0 / 640px 128px;
         transform: scale(1.2);   /* about its middle, so it sits 4px higher to keep its feet on the bezel */
-        animation: legs .91s steps(10) infinite, walk 50s linear infinite, flip 50s steps(1) infinite;
+        animation: legs .91s steps(10) infinite, walk 50s linear infinite, flip 50s steps(1) infinite, rest 50s steps(1) infinite;
     }
 }
 @keyframes blink { 50% { opacity: 0; } }
-@keyframes legs { to { object-position: -640px 0; } }
+@keyframes legs { to { background-position-x: -640px; } }
+@keyframes rest { 47% { background-position-y: -64px; } 50% { background-position-y: 0; } 97% { background-position-y: -64px; } }
 @keyframes walk { 47%, 50% { left: calc(100% - 120px); } 97% { left: 40px; } }
 @keyframes flip { 50% { transform: scale(-1.2, 1.2); } 97% { transform: scale(1.2); } }
 
