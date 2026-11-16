@@ -119,10 +119,9 @@ html, body { background: #260a4b; overscroll-behavior: none; }
    they scale with it - itch shrinks the banner to fit phones.
    itch's header spans the whole window with the banner centred in it: pin it to 720px (the banner at
    75%), and let the banner fill it. */
-#profile_header { max-width: 720px; margin: 0 auto; }
-#profile_header .image_header img { display: block; width: 100%; height: auto; }
-#profile_header, #profile_header .image_header { position: relative; }
-#profile_header .image_header { z-index: 1; }
+#profile_header { max-width: 720px; margin: 0 auto; position: relative; }
+#profile_header img { display: block; width: 100%; height: auto; }
+#profile_header .image_header { position: relative; z-index: 1; }
 #profile_header::before, #profile_header::after, #profile_header .image_header::after {
     content: ""; position: absolute; pointer-events: none; image-rendering: pixelated;
     background: no-repeat 0 0 / 100% 100%;

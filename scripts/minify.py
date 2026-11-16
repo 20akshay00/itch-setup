@@ -10,7 +10,7 @@ css = open(src, encoding="utf8").read()
 css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)          # comments
 css = re.sub(r"\s+", " ", css)                            # whitespace runs
 css = re.sub(r"\s*([{};:,>+])\s*", r"\1", css)            # around punctuation
-css = css.replace(";}", "}").strip()
+css = css.replace(";}", "}").replace(" !important", "!important").strip()
 css = css.replace("and(", "and (")                        # media queries need that space
 open(dst, "w", encoding="utf8").write(css)
 print(f"{dst}: {len(css)} / 5120 characters")

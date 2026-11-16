@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>itch link card</title>
+<!-- The card link previews show (Discord, Twitter, ...): the banner with its sprites, as on the profile,
+     on the circuit background, at 1200x600. itch takes a profile's preview image from the cover of the
+     first project in its grid, so this is the cover of a placeholder project that the CSS hides.
+     build.sh renders this to upload/card.png from the built images. -->
+<style>
+html, body { margin: 0; }
+.card {
+    position: relative; width: 1200px; height: 600px; overflow: hidden;
+    background: #260a4b url(../upload/background.png) 50% 0 / 1280px; image-rendering: pixelated;
+}
+/* the profile's header, at the banner's own 960x400 and the profile's positions */
+.header { position: absolute; left: 120px; top: 64px; width: 960px; height: 400px; }
+.header img { position: absolute; }
+.banner { left: 0; top: 0; width: 960px; image-rendering: auto; }
+.island { left: -50px; top: 230px; width: 506px; height: 256px; }
+.tank { right: 30px; top: 190px; width: 240px; height: 234px; transform: rotate(5deg); }
+.flyer { left: -96px; top: -22px; width: 238px; height: 166px; transform: scaleX(-1); }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <img class="island" src="../docs/island.png" alt="">
+    <img class="banner" src="../upload/banner.png" alt="">
+    <img class="tank" src="../docs/tank.png" alt="">
+    <img class="flyer" src="../docs/flyer.png" alt="">
+  </div>
+</div>
+</body>
+</html>

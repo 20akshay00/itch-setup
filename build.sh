@@ -30,6 +30,8 @@ $PY scripts/background.py upload/background.png
 "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 \
     --default-background-color=00000000 --virtual-time-budget=8000 --window-size=960,400 \
     --screenshot="$(cygpath -w "$PWD/upload/banner.png")" "file:///$(cygpath -m "$PWD/art/banner.html")" 2>/dev/null
+# the link-preview card: the cover of a placeholder project the CSS hides (needs the images above)
+"$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --allow-file-access-from-files     --virtual-time-budget=5000 --window-size=1200,600     --screenshot="$(cygpath -w "$PWD/upload/card.png")" "file:///$(cygpath -m "$PWD/art/card.html")" 2>/dev/null
 $PY scripts/minify.py profile.css upload/profile.min.css
 
 echo "built: $(ls docs | tr '\n' ' ')| $(ls upload | tr '\n' ' ')"
