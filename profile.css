@@ -49,17 +49,17 @@
        side, the glow baked in) at the very start of the bio. Its feet are 52px down the frame; the
        bezel is 8px. It's shown at 1.5x (3x the pixel art). walk moves it, flip turns it (steps(1) holds each keyframe until the next). */
     & img {
-        position: absolute; top: -60px; left: 40px;
+        position: absolute; top: -70px; left: 40px;
         width: 64px !important; height: 64px !important; max-width: none;
         object-fit: none; object-position: 0 0; image-rendering: pixelated;
-        scale: 1.5; transform-origin: 50% 52px;   /* 1.5x, about its feet */
+        transform: scale(1.5);   /* about its middle, so it sits 10px higher to keep its feet on the bezel */
         animation: legs .91s steps(10) infinite, walk 50s linear infinite, flip 50s steps(1) infinite;
     }
 }
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes legs { to { object-position: -640px 0; } }
 @keyframes walk { 47%, 50% { left: calc(100% - 120px); } 97% { left: 40px; } }
-@keyframes flip { 50% { transform: scaleX(-1); } 97% { transform: none; } }
+@keyframes flip { 50% { transform: scale(-1.5, 1.5); } 97% { transform: scale(1.5); } }
 
 /* ---- game covers: little monitors with scanlines; on hover they lift, light up and blink
    PRESS START ---- */
@@ -98,10 +98,11 @@
    drifts in front at the top left; the island and the tank on its rock float along the bottom, their
    ground lines level at 300px, running a little past the column into the margins. Sizes are the
    stickers' own (2x) except the tank, shown at 80% (1.6x the original sprite), all before the
-   header's .75 zoom. */
+   header's 75% shrink. */
 /* itch's header spans the whole window with the banner centred in it; pin it to the banner's 960px,
-   then shrink the sign and its sprites together */
-#profile_header { max-width: 960px; margin: 0 auto; zoom: .75; }
+   then shrink the sign and its sprites together to 75%, from the top (the -100px margin takes back
+   the space the shrink leaves; itch's CSS filter drops zoom and the scale property, so it's a transform) */
+#profile_header { max-width: 960px; margin: 0 auto -100px; transform: translateY(-50px) scale(.75); }
 #profile_header, #profile_header .image_header { position: relative; }
 #profile_header .image_header { z-index: 1; }
 #profile_header::before, #profile_header::after, #profile_header .image_header::after {
